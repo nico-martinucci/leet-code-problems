@@ -37,9 +37,9 @@ Follow up: If you have figured out the O(n) solution, try coding another solutio
  * @return {number}
  */
 var maxSubArray = function(nums) {
-    let maxSum = Math.max(nums[0], nums[nums.length - 1]);
     let leftPointer = 0;
     let rightPointer = nums.length - 1;
+    let maxSum = Math.max(nums[leftPointer], nums[rightPointer]);
     let change = true;
 
     while(change) {
