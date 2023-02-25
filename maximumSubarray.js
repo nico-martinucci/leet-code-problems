@@ -94,12 +94,12 @@ var maxSubArray = function(nums) {
     return maxSum;
 };
 
-console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]), "6") // [4,-1,2,1]
-console.log(maxSubArray([1]), "1")
-console.log(maxSubArray([5,4,-1,7,8]), "23")
-console.log(maxSubArray([1,2,3,4,-6,-7,-8,-9,1]), "10")
-console.log(maxSubArray([-2,1]), "1")
-console.log(maxSubArray([-2,1,0]), "1")
+// console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]), "6") // [4,-1,2,1]
+// console.log(maxSubArray([1]), "1")
+// console.log(maxSubArray([5,4,-1,7,8]), "23")
+// console.log(maxSubArray([1,2,3,4,-6,-7,-8,-9,1]), "10")
+// console.log(maxSubArray([-2,1]), "1")
+// console.log(maxSubArray([-2,1,0]), "1")
 
 
 // Old O(n^2) solution.
@@ -123,3 +123,27 @@ var maxSubArray = function(nums) {
 
     return max;
 };
+
+/*
+NOTES ON THE WAY BETTER SOLUTION:
+- Definitely overcomplicated. I think it's important to remember for these that
+don't actually care about the specific subarray that meets the criteria to not
+think in subarrays. There's likely an easier solution; extrapolate the patterns
+(like "for all negative numbers it'll just be the highest negative number" can 
+be extrapolated to a reset of the running sum) and think in an O(n) context.
+
+
+var maxSubArray2 = function(nums) {
+    
+    let sum = 0 //taking a sum to sum up elements from nums
+    let maxSum = -Infinity   //initializing the max sum
+    for(let ele of nums){  //looping through the array nums
+        sum = sum + ele  // summing up with each element
+        maxSum = Math.max(maxSum, sum)  //keeping the maximum sum in a value
+        if(sum < 0) sum = 0  // if at any iteration, the sum becomes less than 0, make thae sum as 0
+    }
+    return maxSum  //return the maxSum 
+};
+
+
+*/
