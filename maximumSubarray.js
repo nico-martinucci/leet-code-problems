@@ -6,7 +6,7 @@ subarray
  
 
 Example 1:
-
+                       X      X     
 Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
 Output: 6
 Explanation: The subarray [4,-1,2,1] has the largest sum 6.
@@ -32,7 +32,77 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 */
 
-// TODO: was not able to identify an O(n) solution for this one.
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    let maxSum = Math.max(nums[0], nums[nums.length - 1]);
+    let leftPointer = 0;
+    let rightPointer = nums.length - 1;
+    let change = true;
+
+    while(change) {
+        console.log("top of main while loop")
+        change = false;
+        
+        while (nums[leftPointer] <= 0 && leftPointer < nums.length - 1) {
+            leftPointer += 1;
+            maxSum = Math.max(maxSum, nums[leftPointer]);
+            change = true;
+        }
+        
+        while (nums[rightPointer] <= 0 && rightPointer > 0) {
+            rightPointer -= 1;
+            maxSum = Math.max(maxSum, nums[rightPointer]);
+            change = true;
+        }
+
+        let leftSum = nums[leftPointer];
+        let tempLeft = leftPointer + 1;
+        
+        while (tempLeft <= rightPointer) {
+            leftSum += nums[tempLeft];
+            maxSum = Math.max(maxSum, leftSum);
+            
+            if (leftSum <= 0) {
+                leftPointer = tempLeft + 1;
+                change = true;
+                break;
+            }
+
+            tempLeft += 1;
+        }
+        
+        let rightSum = nums[rightPointer];
+        let tempRight = rightPointer - 1;
+        
+        while (tempRight >= leftPointer) {
+            rightSum += nums[tempRight];
+            maxSum = Math.max(maxSum, rightSum);
+            
+            if (rightSum <= 0) {
+                rightPointer = tempRight - 1;
+                change = true;
+                break;
+            }
+
+            tempRight -= 1;
+        }
+    }
+
+    return maxSum;
+};
+
+console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]), "6") // [4,-1,2,1]
+console.log(maxSubArray([1]), "1")
+console.log(maxSubArray([5,4,-1,7,8]), "23")
+console.log(maxSubArray([1,2,3,4,-6,-7,-8,-9,1]), "10")
+console.log(maxSubArray([-2,1]), "1")
+console.log(maxSubArray([-2,1,0]), "1")
+
+
+// Old O(n^2) solution.
 
 /**
  * @param {number[]} nums
