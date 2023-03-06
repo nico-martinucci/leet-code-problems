@@ -48,11 +48,6 @@ var insert = function(intervals, newInterval) {
     //      WHAT to input; WHERE to put it; HOW MUCH to remove
     // in last two cases, can pull out any overlapping intervals and construct a new one with the lowest and highest values, which can be inserted
 
-    // loop through intervals (maybe while newStart is less than current interval's start)
-    // increment index marker
-    // if newStart is greater than or equal to start of current interval... 
-    // if newStart is after end of current intervals and newEnd is before the start of next interval, break
-
     // console.log("intervals", intervals);
     // console.log("newInterval", newInterval);
 
