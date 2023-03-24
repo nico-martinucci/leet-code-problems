@@ -80,3 +80,64 @@ var isValidBST = function (root, parent = null, grandparent = null) {
 
     return false;
 };
+
+// TAKE TWO
+
+/*
+Given the root of a binary tree, determine if it is a valid binary search tree 
+(BST).
+
+A valid BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's 
+key. The right subtree of a node contains only nodes with keys greater than the 
+node's key. Both the left and right subtrees must also be binary search trees.
+
+NOTES:
+- challenge: 
+- each number that we check needs to be checked against a min and max
+- i.e. each number has to be greater than the min, less than the max
+- maxs are established as we traverse the tree in a left-wise direction
+- mins are established in a right-wise direction
+
+TEST CASES:
+- root = [2,1,3] -> true
+- root = [2,3,4] -> false
+- root = [10,5,15,2,7,null,null] -> true
+- root = [10,5,15,2,11,null,null] -> true
+- root = [1] -> true
+
+APPROACH:
+- recursive
+- base-case: if node is null, return true
+- here, have a valid node
+- check the node against the provided max/min
+    - needs to be less than max, greater than min
+- store recurisve calls to the node's children (with update min/max)
+    - call left with an updated max
+    - call right with an update min
+- return wheter all of the above are true or not
+*/
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root, max = Infinity, min = -Infinity) {
+    if (root === null) return true;
+
+    let validNode = root.val < max && root.val > min;
+
+    validNode = validNode && isValidBST(root.left, root.val, min);
+    validNode = validNode && isValidBST(root.right, max, root.val);
+
+    return validNode;
+};
